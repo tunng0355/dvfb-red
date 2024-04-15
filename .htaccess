@@ -1,0 +1,75 @@
+RewriteEngine On
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:api-token}]
+
+<files .htaccess>
+order allow,deny
+deny from all
+</files>
+
+<ifmodule mod_php4.c>
+php_value zlib.output_compression 16386
+</ifmodule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/x-httpd-php
+AddOutputFilterByType DEFLATE application/x-httpd-fastphp
+AddOutputFilterByType DEFLATE image/svg+xml
+SetOutputFilter DEFLATE
+</IfModule>
+
+<files config.php>
+order allow,deny
+deny from all
+</files>
+
+
+<files function.php>
+order allow,deny
+deny from all
+</files>
+
+#pages
+RewriteRule ^trang-chu$ /src/pages/home.php [L]
+RewriteRule ^tao-web$ /src/pages/web.php [L]
+RewriteRule ^bang-gia$ /src/pages/price.php [L]
+RewriteRule ^tai-khoan$ /src/pages/info.php [L]
+RewriteRule ^nap-tien$ /src/pages/nap.php [L]
+RewriteRule ^chuyen-khoan$ /src/pages/pay.php [L]
+RewriteRule ^lich-su$ /src/pages/history.php [L]
+RewriteRule ^doi-thuong$ /src/pages/gift.php [L]
+RewriteRule ^nhiem-vu$ /src/pages/mission.php [L]
+
+#admin
+RewriteRule ^quan-ly/thanh-vien$ /src/admin/thanhvien.php [L]
+RewriteRule ^quan-ly/dai-ly$ /src/admin/daily.php [L]
+RewriteRule ^quan-ly/the-loai$ /src/admin/theloai.php [L]
+RewriteRule ^quan-ly/dich-vu$ /src/admin/dichvu.php [L]
+RewriteRule ^quan-ly/server$ /src/admin/server.php [L]
+RewriteRule ^quan-ly/site$ /src/admin/site.php [L]
+RewriteRule ^quan-ly/order$ /src/admin/order.php [L]
+RewriteRule ^quan-ly/nap-tien$ /src/admin/nap.php [L]
+RewriteRule ^quan-ly/cai-dat-site$ /src/admin/setting.php [L]
+RewriteRule ^quan-ly/cai-dat-bank$ /src/admin/bank.php [L]
+
+#service
+RewriteRule ^service/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ /src/service/order.php?loai=$1&type=$2 [L]
+
+#auth
+RewriteRule ^dang-nhap$ /src/auth/login.php [L]
+RewriteRule ^dang-ky$ /src/auth/register.php [L]
+RewriteRule ^dang-xuat$ /src/auth/logout.php [L]
+
+#api
+RewriteRule ^v1/api$ /core/api.php [L]
+RewriteRule ^v1/adn$ /core/adn.php [L]
+RewriteRule ^v1/cron$ /core/cron/bank.php [L]
+
